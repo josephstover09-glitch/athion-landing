@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <script async type='text/javascript' src='https://static.klaviyo.com/onsite/js/XpzgJ4/klaviyo.js?company_id=XpzgJ4'></script>
-          <script type="text/javascript"> 
-          //Initialize Klaviyo object on page load
-          !function(){if(!window.klaviyo){window._klOnsite=window._klOnsite||[];try{window.klaviyo=new Proxy({},{get:function(n,i){return"push"===i?function(){var n;(n=window._klOnsite).push.apply(n,arguments)}:function(){for(var n=arguments.length,o=new Array(n),w=0;w<n;w++)o[w]=arguments[w];var t="function"==typeof o[o.length-1]?o.pop():void 0,e=new Promise((function(n){window._klOnsite.push([i].concat(o,[function(i){t&&t(i),n(i)}]))}));return e}}})}catch(n){window.klaviyo=window.klaviyo||[],window.klaviyo.push=function(){var n;(n=window._klOnsite).push.apply(n,arguments)}}}}(); </script>
-          <script type="text/javascript"> 
-          //Initialize Klaviyo object on page load
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Athion Apparel — Earned. Never Given.</title>
@@ -20,10 +14,6 @@
 <meta name="twitter:title" content="Athion Apparel — Earned. Never Given.">
 <meta name="twitter:description" content="Built for the work nobody sees. Heavyweight, oversized essentials for people who train without an audience.">
 <meta name="twitter:image" content="https://athionapparel.com/og-image.jpg">
-<script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/XpzgJ4/klaviyo.js?company_id=XpzgJ4"></script>
-<script type="text/javascript">
-!function(){if(!window.klaviyo){window._klOnsite=window._klOnsite||[];try{window.klaviyo=new Proxy({},{get:function(n,i){return"push"===i?function(){var n;(n=window._klOnsite).push.apply(n,arguments)}:function(){for(var n=arguments.length,o=new Array(n),w=0;w<n;w++)o[w]=arguments[w];var t="function"==typeof o[o.length-1]?o.pop():void 0,e=new Promise((function(n){window._klOnsite.push([i].concat(o,[function(i){t&&t(i),n(i)}]))}));return e}}})}catch(n){window.klaviyo=window.klaviyo||[],window.klaviyo.push=function(){var n;(n=window._klOnsite).push.apply(n,arguments)}}}}();
-</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -160,6 +150,7 @@
   }
   .join-form button:hover{ background:var(--olive-dark); }
   .join-note{ margin-top:16px; font-family:var(--font-mono); font-size:11px; color:var(--text-muted); }
+  .join-success{ margin-top:24px; font-size:15px; color:var(--olive-dark); }
 
   /* FOOTER */
   footer{ background:var(--off-black); color:rgba(232,228,217,0.5); padding:48px 0; }
@@ -259,7 +250,13 @@
 
 <section class="join" id="join">
   <div class="wrap">
-    <div class="klaviyo-form-S4rnkA"></div>
+    <h2>Be first when the work becomes a product.</h2>
+    <p>No spam, no daily emails. Just a heads-up when Drop 01 goes live.</p>
+    <form class="join-form" action="https://formspree.io/f/mojobkye" method="POST" id="joinForm">
+      <input type="email" name="email" placeholder="you@email.com" required>
+      <button type="submit">Notify me</button>
+    </form>
+    <div class="join-success" id="joinSuccess" style="display:none;">You're on the list. Talk soon.</div>
     <div class="join-note">EARNED. NEVER GIVEN.</div>
   </div>
 </section>
@@ -302,6 +299,29 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  const joinForm = document.getElementById('joinForm');
+  const joinSuccess = document.getElementById('joinSuccess');
+  if (joinForm) {
+    joinForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const data = new FormData(joinForm);
+      fetch(joinForm.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function(response){
+        if (response.ok) {
+          joinForm.style.display = 'none';
+          joinSuccess.style.display = 'block';
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      }).catch(function(){
+        alert('Something went wrong. Please try again.');
+      });
+    });
+  }
 </script>
 
 </body>
